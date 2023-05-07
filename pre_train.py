@@ -120,11 +120,6 @@ if ckpt_manager.latest_checkpoint:
 	ckpt.restore(ckpt_manager.latest_checkpoint)
 	print ('Latest checkpoint restored!!')
 
-if save_embedding_weights:
-	embeddings = transformer.encoder.embedding.get_weights()[0]
-	np.save("./Data/cn2v_embedding.npy", embeddings)
-# sys.exit(0)
-
 # The @tf.function trace-compiles train_step into a TF graph for faster
 # execution. The function specializes to the precise shape of the argument
 # tensors. To avoid re-tracing due to the variable sequence lengths or variable
@@ -199,3 +194,8 @@ for epoch in range(EPOCHS):
 				print ('Saving checkpoint for steps {} at {}'.format(steps, ckpt_save_path))
 	print ('Epoch {} Loss {:.4f} Accuracy {:.4f}'.format(epoch + 1, train_loss.result(), train_accuracy.result()))
 	print ('Time taken for 1 epoch: {} secs\n'.format(time.time() - start))
+
+
+if save_embedding_weights:
+	embeddings = transformer.encoder.embedding.get_weights()[0]
+	np.save("./Data/cn2v_embedding.npy", embeddings)
